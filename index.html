@@ -2007,8 +2007,19 @@ window.addEventListener('popstate', () => {
   else showPage('home');
 });
 
-// Init from URL
-if (window.location.pathname === '/about') showPage('about');
+// Init from URL - force scroll to top and show correct page
+window.addEventListener('DOMContentLoaded', function() {
+  const path = window.location.pathname;
+  if (path === '/about' || path.includes('about')) {
+    document.getElementById('page-home').style.display = 'none';
+    document.getElementById('page-home').style.visibility = 'hidden';
+    const aboutEl = document.getElementById('page-about');
+    aboutEl.style.display = 'block';
+    aboutEl.classList.add('active');
+    showTab('about');
+    window.scrollTo(0, 0);
+  }
+});
 
 // ─── ABOUT TAB SYSTEM ───
 function showTab(id) {
